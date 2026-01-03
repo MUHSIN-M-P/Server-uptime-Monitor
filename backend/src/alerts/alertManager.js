@@ -5,7 +5,8 @@ async function alertDown(monitor, error) {
     const msg = `DOWN\n${monitor.url}\nError: ${error}\nTime: ${new Date()}`;
 
     try {
-        await sendEmail(monitor.alert_email, `DOWN: ${monitor.url}`, msg);
+        const alertEmail = process.env.ALERT_EMAIL_USER;
+        await sendEmail(alertEmail, `DOWN: ${monitor.url}`, msg);
     } catch (err) {
         console.error("Failed to send DOWN alert email:", err.message);
     }
@@ -19,7 +20,8 @@ async function alertUp(monitor, duration) {
     }\nDowntime: ${duration}s\nRecovered at: ${new Date()}`;
 
     try {
-        await sendEmail(monitor.alert_email, `RECOVERED: ${monitor.url}`, msg);
+        const alertEmail = process.env.ALERT_EMAIL_USER;
+        await sendEmail(alertEmail, `RECOVERED: ${monitor.url}`, msg);
     } catch (err) {
         console.error("Failed to send RECOVERED alert email:", err.message);
     }
